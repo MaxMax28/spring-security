@@ -5,6 +5,7 @@ import web.model.Role;
 import web.model.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
@@ -12,9 +13,6 @@ import java.util.Map;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    private final Map<String, User> userMap = Collections.singletonMap("test",
-            new User(1L, "test", "test", Collections.singleton(new Role())));
-    // name - уникальное значение, выступает в качестве ключа Map
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -36,11 +34,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByName(String name) {
-        if (!userMap.containsKey(name)) {
+        try {
+            return entityManager.createQuery("from User u where u.name=:name", User.class).setParameter("name", name).getSingleResult();
+        } catch (NoResultException e) {
             return null;
         }
-
-        return userMap.get(name);
     }
 
     @Override
