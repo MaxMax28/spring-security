@@ -5,13 +5,27 @@
     <title>Update_User</title>
 </head>
 <body>
-<form th:action="@{/update}" method="post"
+<form th:action="@{/admin/update}" method="post"
       th:object="${user}">
-    <input th:value="${user.id}" name="id" readonly></input>
+
+    <label for="name">Id</label>
+    <input type="text" class="form-control" id="id" th:field="*{id}" hidden> </input>
+
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name" th:field="*{name}"> </input>
+
     <label for="password">Password</label>
-    <input type="text" class="form-control" id="password" th:field="*{password}"> </input>
+    <input type="text"  class="form-control" id="password" name="password"> </input>
+
+<!--    <label for="roles">Role</label>-->
+<!--    <input type="text" class="form-control" id="roles" th:field="*{roles}">-->
+
+        <select size="5" multiple name="roles">
+            <option disabled>Chose ROLE</option>
+            <option value="ADMIN">ADMIN</option>
+            <option  selected value="USER">USER</option>
+        </select>
+
     <input type="submit" value="ok">
     <a href="/">AT MAIN PAGE</a>
 </form>

@@ -8,13 +8,14 @@
 <body>
 
 <h2>All Users</h2>
+<div>
 <table>
     <thead>
     <tr>
         <th>Id</th>
         <th>Name</th>
         <th>Role</th>
-        <th>Change</th>
+        <th>Edit</th>
         <th>Delete</th>
     </tr>
     </thead>
@@ -22,12 +23,14 @@
     <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.name}"></td>
-        <td th:text="${user.}"></td>????????????????????????????????????????????????????????????????
-        <th><a th:href="@{/update/{id}(id=${user.id})}">Change</a></th>
-        <th><a th:href="@{/delete/{id}(id=${user.id})}">Delete</a></th>
+        <td th:text="${user.roles}"></td>
+        <td><a th:href="@{/admin/update/{id}(id=${user.id})}">Edit</a></td>
+        <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
     </tr>
-    <tbody>
+    <td><a th:href="@{/admin/add}">Add new User</a></td>
+    <td><a th:href="@{/logout}">Logout</a></td>
+    </tbody>
 </table>
-
+</div>
 </body>
 </html>

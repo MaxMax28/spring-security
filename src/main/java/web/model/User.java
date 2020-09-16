@@ -18,7 +18,10 @@ public class User implements UserDetails {
     private String name;
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+   // @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinTable(name="users_Role", joinColumns = @JoinColumn (name = "User_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
 
     public User() {
@@ -27,6 +30,12 @@ public class User implements UserDetails {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public User(String name, String password, Set<Role> roles) {
+        this.name = name;
+        this.password = password;
+        this.roles = roles;
     }
 
     public User(Long id, String name, String password, Set<Role> roles) {
@@ -58,6 +67,10 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -95,101 +108,3 @@ public class User implements UserDetails {
         return true;
     }
 }
-
-
-/*
-@Entity
-@Table(name = "employee", schema = "", catalog = "relationship")
-public class EmployeeEntity {
-    private int id;
-    private String firstName;
-    private String lastName;
-    private int addressId;
-
-    //OneToMany Example
-    private Set<ContactsEntity> contacts = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
-    public Set<ContactsEntity> getContacts() {
-        return this.contacts;
-    }
-
-    public void setContacts(Set<ContactsEntity> contacts) {
-        this.contacts = contacts;
-    }
-
-    public void addContacts(ContactsEntity contact) {
-        contact.setEmployee(this);
-        this.contacts.add(contact);
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, insertable = true, updatable = true)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Basic
-    @Column(name = "firstName", nullable = true, insertable = true, updatable = true, length = 200)
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @Basic
-    @Column(name = "lastName", nullable = true, insertable = true, updatable = true, length = 200)
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    @Column(name = "fk_ad_id", nullable = false, insertable = false, updatable = false)
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        EmployeeEntity that = (EmployeeEntity) o;
-        if (id != that.id) return false;
-        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(that.lastName) : that.lastName != null) return false;
-        return true;
-    }
-
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "EmployeeEntity{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
-    }
-}
- */

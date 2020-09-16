@@ -26,7 +26,9 @@ public class UserController {
 	@GetMapping("/user")
 	public String user(@RequestParam String name, Model model) {
 		User user = userService.getUserByName(name);
-		model.addAttribute("user", user);
+		model.addAttribute("id", user.getId());
+		model.addAttribute("name", user.getName());
+		model.addAttribute("roles", user.getRoles());
 		return "user";
 	}
 }

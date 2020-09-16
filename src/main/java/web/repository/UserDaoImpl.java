@@ -1,15 +1,12 @@
-package web.dao;
+package web.repository;
 
 import org.springframework.stereotype.Repository;
-import web.model.Role;
 import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -48,7 +45,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(long id) {
-        entityManager.createNativeQuery("delete from users where id=:id").setParameter("id", id).executeUpdate();
+        entityManager.createNativeQuery("delete from users u where u.id=:id").setParameter("id", id).executeUpdate();
+        //entityManager.remove(id);
     }
 
 }

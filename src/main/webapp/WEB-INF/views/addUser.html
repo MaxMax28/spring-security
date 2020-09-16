@@ -7,7 +7,7 @@
 <body>
 <h1>REGISTRATION</h1>
 
-<form action="/addUser" method="POST">
+<form action="/admin/add" method="POST">
     <input type="hidden" name="id" value="${user.id}">
 
     <label for="name">Name</label>
@@ -16,23 +16,15 @@
     <label for="password">Password</label>
     <input type="password" name="password" id="password">
 
-    <input type="submit" value="Add User">
-</form>
+    <select multiple name="roles">
+        <option disabled>Chose ROLE</option>
+        <option value="ADMIN">ADMIN</option>
+        <option  selected value="USER">USER</option>
+    </select>
 
-<!--<form action="#" th:action="@{/add}" th:object="${user}" method="post">-->
-<!--    <label for="name">First name:</label><br>-->
-<!--    <input type="text" id="name" th:field="*{name}"><br>-->
-<!--    <label for="pass">Password:</label><br>-->
-<!--    <input type="text" id="pass" th:field="*{password}">-->
-<!--    <select multiple th:field="*{roles}">-->
-<!--        <option value="default">All Roles</option>-->
-<!--        <option th:each="role : ${roles}"-->
-<!--                th:value="${role.roleId}"-->
-<!--                th:field="*{roles}"-->
-<!--                th:text="${role.getRole()}"></option>-->
-<!--    </select>-->
-<!--    <input type="submit" value="Add user">-->
-<!--</form>-->
+    <input type="submit" value="Add User">
+
+</form>
 
 <a href="/">AT MAIN PAGE</a>
 

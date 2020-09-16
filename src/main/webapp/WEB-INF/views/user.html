@@ -11,13 +11,19 @@
     <tr>
         <th>Id</th>
         <th>Name</th>
+        <th>Role</th>
     </tr>
     </thead>
     <tbody>
+
     <tr>
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
+        <td th:text="${id}"></td>
+        <td th:text="${name}"></td>
+        <td th:text="${roles}"></td>
     </tr>
+
+    <td><a th:href="@{/logout}">Logout</a></td>
+
     <tbody>
 </table>
 

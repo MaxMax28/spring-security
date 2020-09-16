@@ -11,35 +11,39 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-//    @Override
-//    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-//                                        HttpServletResponse httpServletResponse,
-//                                        Authentication authentication) throws IOException, ServletException {
-//        //httpServletResponse.sendRedirect("/hello");
-//        httpServletResponse.sendRedirect("/");
-//    }
-
-    // Spring Security использует объект Authentication, пользователя авторизованной сессии.
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
-                                          HttpServletResponse httpServletResponse,
-                                          Authentication authentication) throws IOException {
+                                        HttpServletResponse httpServletResponse,
+                                        Authentication authentication) throws IOException {
         User user = (User) authentication.getPrincipal();
-        List<String> userRolesList = new ArrayList<>();
+        Set<Role> userRolesList = user.getRoles();
 
-        for (Role role : user.getRoles()) {
-            userRolesList.add(role.getName());
-        }
-        if (userRolesList.contains("USER")) {
-            httpServletResponse.sendRedirect("/user");
-        } if (userRolesList.contains("ADMIN")) {
+        if (userRolesList.size() > 1) {
             httpServletResponse.sendRedirect("/admin/allUsers");
         } else {
-            httpServletResponse.sendRedirect("/");
+                httpServletResponse.sendRedirect("/user" + "?name=" + user.getName());
         }
+
+
+//        for (Role role : userRolesList) {
+//            if (role.getName().equals("ROLE_ADMIN")) {
+//                httpServletResponse.sendRedirect("/admin/allUsers");
+//            } else {
+//                httpServletResponse.sendRedirect("/user" + "?name=" + user.getName());
+//            }
+//            //userRolesList.add(role.getName());
+//        }
+////        if (userRolesList.contains("ROLE_USER") && !userRolesList.contains("ROLE_ADMIN")) {
+//            httpServletResponse.sendRedirect("/user" + "?name=" + user.getName());
+//        } else if (userRolesList.contains("ROLE_ADMIN")) {
+//            httpServletResponse.sendRedirect("/admin/allUsers");
+//        } else {
+//            httpServletResponse.sendRedirect("/");
+//        }
     }
 }

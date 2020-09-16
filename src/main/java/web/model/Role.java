@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Component
 @Entity
@@ -15,11 +16,39 @@ public class Role implements GrantedAuthority {
     private Long id;
     private String role;
 
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    //@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_Role", joinColumns = @JoinColumn(name = "roles_id"),
+            inverseJoinColumns = @JoinColumn(name = "User_id"))
+    private List<User> users;
+
     public Role() {
     }
 
     public Role(String role) {
         this.role = role;
+    }
+
+    public Role(Long id, String role, List<User> users) {
+        this.id = id;
+        this.role = role;
+        this.users = users;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Long getId() {
@@ -40,10 +69,8 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", role='" + role + '\'' +
-                '}';
+        return "Role: " +
+                 role;
     }
 
     @Override

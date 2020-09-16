@@ -1,4 +1,4 @@
-package web.dao;
+package web.repository;
 
 import web.model.User;
 
