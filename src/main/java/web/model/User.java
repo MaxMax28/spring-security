@@ -18,7 +18,7 @@ public class User implements UserDetails {
     private String name;
     private String password;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
    // @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name="users_Role", joinColumns = @JoinColumn (name = "User_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id"))

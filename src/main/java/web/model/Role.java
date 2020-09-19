@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @Entity
@@ -16,10 +17,10 @@ public class Role implements GrantedAuthority {
     private Long id;
     private String role;
 
-    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "roles")
     //@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_Role", joinColumns = @JoinColumn(name = "roles_id"),
-            inverseJoinColumns = @JoinColumn(name = "User_id"))
+//    @JoinTable(name = "users_Role", joinColumns = @JoinColumn(name = "roles_id"),
+//            inverseJoinColumns = @JoinColumn(name = "User_id"))
     private List<User> users;
 
     public Role() {
@@ -29,11 +30,11 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    public Role(Long id, String role, List<User> users) {
-        this.id = id;
-        this.role = role;
-        this.users = users;
-    }
+//    public Role(Long id, String role, List<User> users) {
+//        this.id = id;
+//        this.role = role;
+//        this.users = users;
+//    }
 
     public String getRole() {
         return role;
@@ -43,13 +44,13 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
 
     public Long getId() {
         return id;
@@ -61,6 +62,19 @@ public class Role implements GrantedAuthority {
 
     public String getName() {
         return role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role1 = (Role) o;
+        return role.equals(role1.role);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(role);
     }
 
     public void setName(String role) {

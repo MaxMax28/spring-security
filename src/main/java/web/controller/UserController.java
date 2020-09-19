@@ -1,6 +1,7 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,8 +25,8 @@ public class UserController {
 	}
 
 	@GetMapping("/user")
-	public String user(@RequestParam String name, Model model) {
-		User user = userService.getUserByName(name);
+	public String user(Model model, Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
 		model.addAttribute("id", user.getId());
 		model.addAttribute("name", user.getName());
 		model.addAttribute("roles", user.getRoles());

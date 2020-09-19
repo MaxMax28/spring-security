@@ -7,7 +7,7 @@
 <body>
 <h1>REGISTRATION</h1>
 
-<form action="/admin/add" method="POST">
+<form method="post" action="/admin/add">
     <input type="hidden" name="id" value="${user.id}">
 
     <label for="name">Name</label>
@@ -16,14 +16,10 @@
     <label for="password">Password</label>
     <input type="password" name="password" id="password">
 
-    <select multiple name="roles">
-        <option disabled>Chose ROLE</option>
-        <option value="ADMIN">ADMIN</option>
-        <option  selected value="USER">USER</option>
-    </select>
-
-    <input type="submit" value="Add User">
-
+    <p><b>Roles</b></p>
+    <p><input type="checkbox" name="role1" value="ADMIN">ADMIN<Br>
+        <input type="checkbox" name="role2" value="USER">USER<Br>
+    <p><input type="submit" value="Add"></p>
 </form>
 
 <a href="/">AT MAIN PAGE</a>
